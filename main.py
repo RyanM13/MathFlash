@@ -1,7 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QVBoxLayout, QApplication
-from PyQt5.QtQuick import QQuickView
-from PyQt5.QtQml import QQmlApplicationEngine
-from PyQt5.QtCore import QUrl
+from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QApplication, QToolTip
+from PyQt5.QtCore import Qt
 
 import sys
 
@@ -13,30 +11,44 @@ class MainWindow(QWidget):
 
     def initui(self):
         self.setWindowTitle("Calc Memorization")
-        layout = QGridLayout()
+
+        layout = QGridLayout() 
+        self.resize(350,75)
 
         
         self.title_label = QLabel("Welcome to Calc Memorization!", self)
-        layout.addWidget(self.title_label)
+        self.title_label.setStyleSheet("font-size: 18px; font-weight: bold;")
+        self.title_label.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        layout.addWidget(self.title_label,0,0,1,2)
         
         self.Calc_Derivatives = QPushButton("Calc Derivatives", self)
-        layout.addWidget(self.Calc_Derivatives)
+        self.Calc_Derivatives.clicked.connect(self.Calc)
+        layout.addWidget(self.Calc_Derivatives,1,0 )
         
         self.Trig_Identities = QPushButton("Trig Identities", self)
-        layout.addWidget(self.Trig_Identities)
+        layout.addWidget(self.Trig_Identities, 1, 1)
+        self.Trig_Identities.setToolTip("Learn your trig identities!")
         
 
         
         
         self.setLayout(layout)
         
-        
+
+    
+    def Calc(self):
+        sin = "cos x"
+        cos = "-sin x"
+        tan = "sec^2 x"
+        cot = "-csc^2 x"
+        sec = "sec x tan x"
+        csc = "-csc x cot x"
+        list = sin, cos, tan, cot, sec, csc
+         
+
 
 if __name__ == "__main__":
         app = QApplication(sys.argv)
-        view = QQuickView()
-        view.setSource(QUrl("main.qml"))
-        view.show
         window = MainWindow()
         window.show()
         sys.exit(app.exec_())
