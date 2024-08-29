@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QApplication, QToolTip
 from PyQt5.QtCore import Qt
+import random
 
 import sys
 
@@ -29,6 +30,9 @@ class MainWindow(QWidget):
         layout.addWidget(self.Trig_Identities, 1, 1)
         self.Trig_Identities.setToolTip("Learn your trig identities!")
         
+        self.Calc_AntiDerivatives= QPushButton("Calc AntiDerivative", self)
+        layout.addWidget(self.Calc_AntiDerivatives,2,0)
+        
 
         
         
@@ -43,7 +47,9 @@ class MainWindow(QWidget):
         cot = "-csc^2 x"
         sec = "sec x tan x"
         csc = "-csc x cot x"
-        list = sin, cos, tan, cot, sec, csc
+        list = ["sin", "cos", "tan", "cot", "sec", "csc"]
+
+        print(random.choice(list))
          
 
 
