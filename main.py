@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QApplication, QToolTip
+from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QApplication, QToolTip, QVBoxLayout
 from PyQt5.QtCore import Qt
 import random
 
@@ -13,30 +13,30 @@ class MainWindow(QWidget):
     def initui(self):
         self.setWindowTitle("Calc Memorization")
 
-        layout = QGridLayout() 
+        self.layout = QGridLayout() 
         self.resize(350,75)
 
         
         self.title_label = QLabel("Welcome to Calc Memorization!", self)
         self.title_label.setStyleSheet("font-size: 18px; font-weight: bold;")
         self.title_label.setAlignment(Qt.AlignTop | Qt.AlignCenter)
-        layout.addWidget(self.title_label,0,0,1,2)
+        self.layout.addWidget(self.title_label,0,0,1,2)
         
         self.Calc_Derivatives = QPushButton("Calc Derivatives", self)
-        self.Calc_Derivatives.clicked.connect(self.Calc)
-        layout.addWidget(self.Calc_Derivatives,1,0 )
+        self.Calc_Derivatives.clicked.connect(self.Title_Screen)
+        self.layout.addWidget(self.Calc_Derivatives,1,0 )
         
         self.Trig_Identities = QPushButton("Trig Identities", self)
-        layout.addWidget(self.Trig_Identities, 1, 1)
+        self.layout.addWidget(self.Trig_Identities, 1, 1)
         self.Trig_Identities.setToolTip("Learn your trig identities!")
         
         self.Calc_AntiDerivatives= QPushButton("Calc AntiDerivative", self)
-        layout.addWidget(self.Calc_AntiDerivatives,2,0)
+        self.layout.addWidget(self.Calc_AntiDerivatives,2,0)
         
 
         
         
-        self.setLayout(layout)
+        self.setLayout(self.layout)
         
 
     
@@ -49,8 +49,44 @@ class MainWindow(QWidget):
         csc = "-csc x cot x"
         list = ["sin", "cos", "tan", "cot", "sec", "csc"]
 
-        print(random.choice(list))
+        random_choice = random.choice(list)
+        
+        self.Display_label = QLabel(random_choice)
+        self.Display_label.setStyleSheet("font-size: 32px")
+
          
+
+    def Title_Screen(self):
+        self.clear_layout()
+
+        self.Start_label = QLabel("How to start")
+        self.Start_label.setStyleSheet("font-size: 21px; font-weight: bold")
+        self.Start_label.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        self.layout.addWidget(self.Start_label, 0,0,1,2)
+        
+        self.Text_label = QLabel("To play you have to enter the correct answer to the random problem!")
+        self.Text_label.setStyleSheet("font-size: 15px")
+        self.Text_label.setAlignment(Qt.AlignCenter)
+        self.layout.addWidget(self.Text_label, 1, 0, 1, 2)
+
+        self.start_button = QPushButton("Start!")
+        self.start_button.setStyleSheet("color: green; font-weight: bold")
+        self.layout.addWidget(self.start_button, 2,0, 1, 2)
+        
+        self.tutorial_button = QPushButton("Tutorial")
+        self.tutorial_button.setStyleSheet("font-size: 9px")
+        self.layout.addWidget(self.tutorial_button, 0,1, Qt.AlignRight)
+
+
+
+        
+        print("PLaceholder")
+
+    def clear_layout(self):
+        #clears the layout
+        #very usefull snippet of code!
+        for i in reversed(range(self.layout.count())): 
+         self.layout.itemAt(i).widget().setParent(None)
 
 
 if __name__ == "__main__":
