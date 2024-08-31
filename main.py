@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QApplication, QLineEdit 
+from PyQt5.QtWidgets import QWidget, QGridLayout, QPushButton, QLabel, QApplication, QLineEdit
 from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import QIcon
 import random
 
 import sys
@@ -13,6 +14,7 @@ class MainWindow(QWidget):
     def initui(self):
         self.setWindowTitle("Calc Memorization")
 
+        self.setWindowIcon(QIcon("mathicon1_s97_icon.ico"))
         self.layout = QGridLayout() 
         self.resize(350,75)
         self.answer_label = QLabel("Answer: ")
