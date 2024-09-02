@@ -35,9 +35,10 @@ class MainWindow(QWidget):
         self.layout.addWidget(self.Calc_Derivatives,1,0 )
         
         self.Trig_Identities = QPushButton("Trig Identities", self)
-        self.layout.addWidget(self.Trig_Identities, 1, 1)
+      
         self.Trig_Identities.setToolTip("Learn your trig identities!")
         self.Trig_Identities.clicked.connect(self.SetTrig)
+        self.layout.addWidget(self.Trig_Identities, 1, 1)
         
         self.Calc_AntiDerivatives= QPushButton("Calc AntiDerivative", self)
         self.layout.addWidget(self.Calc_AntiDerivatives,2,0)
@@ -47,6 +48,35 @@ class MainWindow(QWidget):
         
         
         self.setLayout(self.layout)
+
+    def Main(self):
+        self.clear_layout()
+        self.miss_counter = 0
+        self.point_system = 0
+        self.answers_correct = 0
+        self.resize(350, 50)
+        self.answer_label = QLabel("Answer: ")
+
+        
+        self.title_label = QLabel("Welcome to Calc Memorization!", self)
+        self.title_label.setStyleSheet("font-size: 18px; font-weight: bold;")
+        self.title_label.setAlignment(Qt.AlignTop | Qt.AlignCenter)
+        self.layout.addWidget(self.title_label,0,0,1,2)
+        
+        self.Calc_Derivatives = QPushButton("Calc Derivatives", self)
+        self.Calc_Derivatives.clicked.connect(self.SetCalc)
+        self.Calc_Derivatives.setStyleSheet("color:green")
+        self.layout.addWidget(self.Calc_Derivatives,1,0 )
+        
+        self.Trig_Identities = QPushButton("Trig Identities", self)
+        self.layout.addWidget(self.Trig_Identities, 1, 1)
+        self.Trig_Identities.setToolTip("Learn your trig identities!")
+        self.Trig_Identities.clicked.connect(self.SetTrig)
+        
+        self.Calc_AntiDerivatives= QPushButton("Calc AntiDerivative", self)
+        self.layout.addWidget(self.Calc_AntiDerivatives,2,0)
+        
+        
         
 
     def SetCalc(self):
@@ -118,6 +148,11 @@ class MainWindow(QWidget):
         self.radical_button.clicked.connect(self.radicalsign)
         self.layout.addWidget(self.radical_button, 1, 2, Qt.AlignLeft)
 
+
+        self.back_button = QPushButton("Back", self)
+        self.back_button.setFixedSize(50,30)
+        self.back_button.clicked.connect(self.BackButton)
+        self.layout.addWidget(self.back_button, 0, 0, Qt.AlignRight)
         # Empty stretch to center the elements horizontally
         self.layout.setColumnStretch(0, 1)
         self.layout.setColumnStretch(3, 1)
@@ -128,6 +163,10 @@ class MainWindow(QWidget):
         self.submit_button.clicked.connect(self.SetCalcCheck)
         self.user_answer.returnPressed.connect(self.submit_button.click)
         self.layout.addWidget(self.submit_button, 2, 0, 1, 4, Qt.AlignCenter)
+
+    def BackButton(self):
+        self.clear_layout 
+        self.Main()
 
         
     
@@ -211,9 +250,10 @@ class MainWindow(QWidget):
     def Title_Screen(self, function):
         self.clear_layout()
         
-        self.tutorial_button = QPushButton("Tutorial")
-        self.tutorial_button.setStyleSheet("font-size: 9px")
-        self.layout.addWidget(self.tutorial_button, 0,1, Qt.AlignRight)
+        self.back_button = QPushButton("Back", self)
+        self.back_button.setFixedSize(50,30)
+        self.back_button.clicked.connect(self.BackButton)
+        self.layout.addWidget(self.back_button, 0, 0)
 
 
         self.Start_label = QLabel("How to play")
@@ -257,6 +297,11 @@ class MainWindow(QWidget):
 
     def check_answer(self,answers):
         self.clear_layout()
+        
+        self.back_button = QPushButton("Back", self)
+        self.back_button.setFixedSize(50,30)
+        self.back_button.clicked.connect(self.BackButton)
+        self.layout.addWidget(self.back_button, 0, 0, Qt.AlignRight)
         user_input = self.user_answer.text().strip().lower()
         self.correct_answer = answers[self.random_choice].strip().lower()
         
