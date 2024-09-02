@@ -14,6 +14,7 @@ class MainWindow(QWidget):
     def initui(self):
         self.setWindowTitle("Calc Memorization")
         
+        
         self.miss_counter = 0
         self.point_system = 0
         self.answers_correct = 0
@@ -31,17 +32,20 @@ class MainWindow(QWidget):
         
         self.Calc_Derivatives = QPushButton("Calc Derivatives", self)
         self.Calc_Derivatives.clicked.connect(self.SetCalc)
-        self.Calc_Derivatives.setStyleSheet("padding: 5px 10px; color:green")
+        self.Calc_Derivatives.setToolTip("Learn your Calc Derivatives!")
         self.layout.addWidget(self.Calc_Derivatives,1,0 )
         
         self.Trig_Identities = QPushButton("Trig Identities", self)
-      
         self.Trig_Identities.setToolTip("Learn your trig identities!")
         self.Trig_Identities.clicked.connect(self.SetTrig)
         self.layout.addWidget(self.Trig_Identities, 1, 1)
         
         self.Calc_AntiDerivatives= QPushButton("Calc AntiDerivative", self)
+        self.Calc_AntiDerivatives.setToolTip("Learn your calc AntiDerivatives!")
+        self.Calc_AntiDerivatives.clicked.connect(self.SetAntiCalc)
         self.layout.addWidget(self.Calc_AntiDerivatives,2,0)
+        
+        
         
 
         
@@ -87,11 +91,18 @@ class MainWindow(QWidget):
         self.Title_Screen(self.Trig)
         self.lastchoice = None
 
+    def SetAntiCalc(self):
+        self.Title_Screen(self.AntiCalc)
+        self.lastchoice = None
+
     def SetCalcCheck(self):
         self.check_answer(self.calc_answers)
 
     def SetTrigCheck(self):
         self.check_answer(self.trig_answers)
+
+    def SetAntiCalcCheck(self):
+        self.check_answer(self.anticalc_answers)
     
     def Calc(self):
         self.clear_layout()
@@ -245,6 +256,75 @@ class MainWindow(QWidget):
         self.layout.addWidget(self.submit_button, 2, 0, 1, 4, Qt.AlignCenter)
 
 
+    def AntiCalc(self):
+        self.anticalc_answers = {
+            "0": "C",
+            "1": "x + C",
+            "x^n": "x^n+1/n+1 + C",
+            "e^x": "e^x + C",
+            "1/x": "lnx + C",
+            "n^x":
+            "n^x/lnn + C",
+            "cos x": "sin x + C",
+            "sin x": "-cos x + C",
+            "sec^2 x": "tan x + C",
+            "csc^2 x": "-cot x + C",
+            "tan x sec x": "sec x + C",
+            "cot x csc x": "-csc x + C",
+            "1/√1-x^2": "arcsin x + C",
+            "-1/√1-x^2": "arccos x + C",
+            "1/1+x^2": "arctan x + C", 
+            "-1/1+x^2": "arc cot x + C",
+            "1/x√x^2-1": "arc sec x + C",
+            "-1/x√x^2 - 1": "arc csc x + C"    
+        }
+        self.clear_layout()
+        
+        self.anticalc_functions = list(self.anticalc_answers.keys())
+
+        self.random_choice = random.choice(self.anticalc_functions)
+        while self.random_choice == self.lastchoice:
+            self.random_choice = random.choice(self.anticalc_functions)   
+            
+            
+        self.lastchoice = self.random_choice
+        
+        self.Display_label = QLabel(self.random_choice , self)
+        self.Display_label.setStyleSheet("font-size: 32px; font-weight: bold; color: #333;")
+        self.layout.addWidget(self.Display_label, 0, 0, 1, 4, Qt.AlignCenter)
+
+        # Label for the answer
+        self.answer_label = QLabel("Answer:", self)
+        self.answer_label.setStyleSheet("font-size: 18px; font-weight: bold;")
+        self.layout.addWidget(self.answer_label, 1, 0, Qt.AlignRight)
+
+        # User answer input
+        self.user_answer = QLineEdit(self)
+        self.user_answer.setFixedSize(100, 30)  # Increased size for easier input
+        self.user_answer.setStyleSheet("font-size: 16px; padding: 5px;")
+        self.layout.addWidget(self.user_answer, 1, 1, Qt.AlignLeft)
+
+        # Radical button
+        self.radical_button = QPushButton("√", self)
+        self.radical_button.setFixedSize(50, 30)
+        self.radical_button.clicked.connect(self.radicalsign)
+        self.layout.addWidget(self.radical_button, 1, 2, Qt.AlignLeft)
+
+
+        self.back_button = QPushButton("Back", self)
+        self.back_button.setFixedSize(50,30)
+        self.back_button.clicked.connect(self.BackButton)
+        self.layout.addWidget(self.back_button, 0, 0, Qt.AlignRight)
+        # Empty stretch to center the elements horizontally
+        self.layout.setColumnStretch(0, 1)
+        self.layout.setColumnStretch(3, 1)
+
+        # Submit button
+        self.submit_button = QPushButton("Submit", self)
+        self.submit_button.setStyleSheet("font-size: 16px; font-weight: bold; background-color: #4CAF50; color: white; padding: 5px 10px;")
+        self.submit_button.clicked.connect(self.SetAntiCalcCheck)
+        self.user_answer.returnPressed.connect(self.submit_button.click)
+        self.layout.addWidget(self.submit_button, 2, 0, 1, 4, Qt.AlignCenter)
          
 
     def Title_Screen(self, function):
@@ -318,12 +398,12 @@ class MainWindow(QWidget):
             self.correct_display.setStyleSheet("font-weight: bold; font-size: 48px; color: green")
             self.layout.addWidget(self.correct_display, 0,1, Qt.AlignCenter)
             QTimer.singleShot(1000, self.Calc)
-        else:
+        elif self.miss_counter <= 3:
             self.wrong_display = QLabel("Incorrect")
             self.wrong_display.setStyleSheet("font-weight: bold; font-size: 48px; color: red")
             self.layout.addWidget(self.wrong_display, 0, 1, Qt.AlignCenter)
 
-            self.answers_correct = 0
+         
             
           
 
@@ -335,10 +415,18 @@ class MainWindow(QWidget):
 
             self.miss_counter +=1
 
-            if self.miss_counter == "3": 
-                self.retry_button = QPushButton("Retry?")
-                self.retry_button.clicked.connect(self.Calc)
-                self.layout.addWidget(self.retry_button, 0, 1, Qt.AlignCenter | Qt.AlignBottom)
+        else:
+            self.wrong_display = QLabel("Incorrect")
+            self.wrong_display.setStyleSheet("font-weight: bold; font-size: 48px; color: red")
+            self.layout.addWidget(self.wrong_display, 0, 1, Qt.AlignCenter)
+            
+            self.correction = QLabel(f"Correct Answer: {self.correct_answer}")
+            self.correction.setStyleSheet("font-size: 14px; color: green")
+            self.layout.addWidget(self.correction,2,1, Qt.AlignCenter | Qt.AlignBottom)
+            
+            self.retry_button = QPushButton("Retry?")
+            self.retry_button.clicked.connect(self.Calc)
+            self.layout.addWidget(self.retry_button, 1, 1, Qt.AlignCenter | Qt.AlignBottom)
             
 
 
