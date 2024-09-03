@@ -32,16 +32,19 @@ class MainWindow(QWidget):
         
         self.Calc_Derivatives = QPushButton("Calc Derivatives", self)
         self.Calc_Derivatives.clicked.connect(self.SetCalc)
+        self.Calc_Derivatives.setFixedSize(175,30)
         self.Calc_Derivatives.setToolTip("Learn your Calc Derivatives!")
         self.layout.addWidget(self.Calc_Derivatives,1,0 )
         
         self.Trig_Identities = QPushButton("Trig Identities", self)
         self.Trig_Identities.setToolTip("Learn your trig identities!")
+        self.Trig_Identities.setFixedSize(175,30)
         self.Trig_Identities.clicked.connect(self.SetTrig)
         self.layout.addWidget(self.Trig_Identities, 1, 1)
         
         self.Calc_AntiDerivatives= QPushButton("Calc AntiDerivative", self)
         self.Calc_AntiDerivatives.setToolTip("Learn your calc AntiDerivatives!")
+        self.Calc_AntiDerivatives.setFixedSize(175,30)
         self.Calc_AntiDerivatives.clicked.connect(self.SetAntiCalc)
         self.layout.addWidget(self.Calc_AntiDerivatives,2,0)
         
@@ -58,9 +61,9 @@ class MainWindow(QWidget):
         self.miss_counter = 0
         self.point_system = 0
         self.answers_correct = 0
-        self.resize(350, 50)
+        self.resize(350,50)
         self.answer_label = QLabel("Answer: ")
-
+        
         
         self.title_label = QLabel("Welcome to Calc Memorization!", self)
         self.title_label.setStyleSheet("font-size: 18px; font-weight: bold;")
@@ -69,15 +72,19 @@ class MainWindow(QWidget):
         
         self.Calc_Derivatives = QPushButton("Calc Derivatives", self)
         self.Calc_Derivatives.clicked.connect(self.SetCalc)
-        self.Calc_Derivatives.setStyleSheet("color:green")
+        self.Calc_Derivatives.setFixedSize(175,30)
+        self.Calc_Derivatives.setToolTip("Learn your Calc Derivatives!")
         self.layout.addWidget(self.Calc_Derivatives,1,0 )
         
         self.Trig_Identities = QPushButton("Trig Identities", self)
         self.layout.addWidget(self.Trig_Identities, 1, 1)
+        self.Trig_Identities.setFixedSize(175,30)
         self.Trig_Identities.setToolTip("Learn your trig identities!")
         self.Trig_Identities.clicked.connect(self.SetTrig)
         
         self.Calc_AntiDerivatives= QPushButton("Calc AntiDerivative", self)
+        self.Calc_AntiDerivatives.setFixedSize(175,30)
+        self.Calc_AntiDerivatives.setToolTip("Learn your calc AntiDerivatives!")
         self.layout.addWidget(self.Calc_AntiDerivatives,2,0)
         
         
@@ -202,8 +209,15 @@ class MainWindow(QWidget):
             "sec(-θ)": "sec θ",
             "cosec(-θ)": "-cosec θ",
             "sin^2θ + cos^2θ": "1",
-            "1 + tan^2θ": "sec^2θ", 
-            "1 + cot^θ": "cosec^2θ", 
+            "1 + tan^2 θ": "sec^2 θ", 
+            "1 + cot^2 θ": "cosec^2 θ", 
+            "cos^2θ ": "csc^2 θ",
+            "1 - sin^2 θ": "cos^2 θ",
+            "tan^2 θ": "sec^2 θ - 1",
+            "cot^2 θ": "csc^2 θ - 1",
+            "sin^2 θ": "1 - cos^2 θ",
+            "sec^2 θ - tan^2 θ": "1",
+            "csc^2 θ - cot^2 θ": "1" 
              
             
         }
