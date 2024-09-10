@@ -85,7 +85,7 @@ class MainWindow(QWidget):
         self.Calc_AntiDerivatives= QPushButton("Calc AntiDerivative", self)
         self.Calc_AntiDerivatives.setFixedSize(175,30)
         self.Calc_AntiDerivatives.setToolTip("Learn your calc AntiDerivatives!")
-        self.layout.addWidget(self.Calc_AntiDerivatives,2,0)
+        self.layout.addWidget(self.SetAntiCalc,2,0)
         
         
         
@@ -103,13 +103,13 @@ class MainWindow(QWidget):
         self.lastchoice = None
 
     def SetCalcCheck(self):
-        self.check_answer(self.calc_answers)
+        self.check_answer(self.calc_answers, self.Calc)
 
     def SetTrigCheck(self):
-        self.check_answer(self.trig_answers)
+        self.check_answer(self.trig_answers, self.Trig)
 
     def SetAntiCalcCheck(self):
-        self.check_answer(self.anticalc_answers)
+        self.check_answer(self.anticalc_answers, self.AntiCalc)
     
     def Calc(self):
         self.clear_layout()
@@ -389,7 +389,7 @@ class MainWindow(QWidget):
         for i in reversed(range(self.layout.count())): 
          self.layout.itemAt(i).widget().setParent(None)
 
-    def check_answer(self,answers):
+    def check_answer(self,answers, function):
         self.clear_layout()
         
         self.back_button = QPushButton("Back", self)
@@ -411,7 +411,7 @@ class MainWindow(QWidget):
             self.correct_display = QLabel("Correct!")
             self.correct_display.setStyleSheet("font-weight: bold; font-size: 48px; color: green")
             self.layout.addWidget(self.correct_display, 0,1, Qt.AlignCenter)
-            QTimer.singleShot(1000, self.Calc)
+            QTimer.singleShot(1000, function)
         elif self.miss_counter <= 3:
             self.wrong_display = QLabel("Incorrect")
             self.wrong_display.setStyleSheet("font-weight: bold; font-size: 48px; color: red")
@@ -425,7 +425,7 @@ class MainWindow(QWidget):
             self.correction.setStyleSheet("font-size: 14px; color: green")
             self.layout.addWidget(self.correction,2,1, Qt.AlignCenter | Qt.AlignBottom)
             
-            QTimer.singleShot(3500, self.Calc)
+            QTimer.singleShot(3500, function)
 
             self.miss_counter +=1
 
@@ -439,7 +439,7 @@ class MainWindow(QWidget):
             self.layout.addWidget(self.correction,2,1, Qt.AlignCenter | Qt.AlignBottom)
             
             self.retry_button = QPushButton("Retry?")
-            self.retry_button.clicked.connect(self.Calc)
+            self.retry_button.clicked.connect(function)
             self.layout.addWidget(self.retry_button, 1, 1, Qt.AlignCenter | Qt.AlignBottom)
             
 
