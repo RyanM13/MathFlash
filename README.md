@@ -1,6 +1,6 @@
 # MathFlash
 
-MathApp is a Python-based application designed to assist users with mathematical concepts through an interactive GUI. Built using PyQt5, it provides a user-friendly interface for solving and learning math problems, making it ideal for students.
+MathFlash is a Python-based application designed to assist users with mathematical concepts through an interactive GUI. Built using PyQt5, it provides a user-friendly interface for solving and learning math problems, making it ideal for students.
 
 ## Features
 
